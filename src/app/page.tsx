@@ -25,34 +25,11 @@ export default function Home() {
     setState("responding");
   });
 
-  // When response video ends → go back to listening
   useEffect(() => {
-    if (state === "responding") {
-      const timeout = setTimeout(() => {
-        playVideo("listening");
-        setState("listening");
-        speech.start();
-      }, 3000); // approximate video length for now
-
-      return () => clearTimeout(timeout);
-    }
-
-    if (state === "greeting") {
-      const timeout = setTimeout(() => {
-        playVideo("listening");
-        setState("listening");
-        speech.start();
-      }, 3000);
-
-      return () => clearTimeout(timeout);
-    }
-
-    if (state === "goodbye") {
-      const timeout = setTimeout(() => {
-        resetChat();
-      }, 4000);
-
-      return () => clearTimeout(timeout);
+    if (state === "listening") {
+      speech.start();
+    } else {
+      speech.stop();
     }
   }, [state]);
 
@@ -62,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-900 to-black text-white flex flex-col items-center justify-center p-4 gap-6">
+    <main className="min-h-screen bg-linear-to-b from-slate-900 to-black text-white flex flex-col items-center justify-center p-4 gap-6">
       <VideoPlayer />
 
       {state === "idle" && (

@@ -41,9 +41,12 @@ export function useVideoController(activeVideo: VideoKey) {
     hidden.addEventListener("canplaythrough", onCanPlay, { once: true });
   }, [activeVideo]);
 
+  const activeVideoEl = isAActive ? videoA : videoB;
+
   return {
     videoA,
     videoB,
     isAActive,
+    activeVideoEl,
   };
 }
