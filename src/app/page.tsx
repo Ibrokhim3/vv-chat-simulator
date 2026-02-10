@@ -7,6 +7,7 @@ import { matchKeyword } from "@/utils/keywordRouter";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { SILENCE_TIME } from "@/consts/silince-time";
+import { cn } from "@/utils/cn";
 
 export default function Home() {
   const { state, setState, playVideo, setTranscript, resetChat } =
@@ -74,21 +75,36 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-linear-to-b from-slate-900 to-black text-white flex flex-col items-center justify-center p-4 gap-6">
       <VideoPlayer />
-
-      {state === "idle" && (
+      <div className="h-16 flex items-center justify-center relative">
+        {/* Start button */}
         <button
           onClick={startChat}
-          className="px-6 py-3 bg-pink-500 rounded-full text-lg hover:bg-pink-600 transition"
+          className={cn(
+            "px-6 py-3 bg-pink-500 rounded-full text-lg transition-all duration-300 cursor-pointer",
+            {
+              "opacity-100 scale-100 pointer-events-auto": state === "idle",
+              "opacity-0 scale-95 pointer-events-none": state !== "idle",
+            },
+          )}
         >
           Start Chat
         </button>
-      )}
 
-      {state === "listening" && (
-        <div className="flex items-center gap-2 text-pink-400 animate-pulse">
-          🎤 Listening...
+        {/* Listening indicator */}
+        <div
+          className={cn(
+            "absolute flex items-center gap-2 text-pink-400 transition-all duration-300 select-none",
+            {
+              "opacity-100 scale-100 pointer-events-auto":
+                state === "listening",
+              "opacity-0 scale-95 pointer-events-none": state !== "listening",
+            },
+          )}
+        >
+          <span className="animate-pulse">🎤</span>
+          Listening...
         </div>
-      )}
+      </div>
     </main>
   );
 }

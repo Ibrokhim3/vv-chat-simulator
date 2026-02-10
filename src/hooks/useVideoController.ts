@@ -12,6 +12,7 @@ export function useVideoController(activeVideo: VideoKey) {
   useEffect(() => {
     const el = videoA.current;
     if (!el) return;
+    el.preload = "auto";
 
     el.src = videoMap[activeVideo];
     el.load();
