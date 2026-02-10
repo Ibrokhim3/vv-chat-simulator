@@ -2,6 +2,7 @@
 
 import { useChatStore } from "@/store/useChatStore";
 import { useVideoController } from "@/hooks/useVideoController";
+import { loopVideos } from "@/utils/videoBehavior";
 
 export default function VideoPlayer() {
   const currentVideo = useChatStore((s) => s.currentVideo);
@@ -28,6 +29,8 @@ export default function VideoPlayer() {
     };
   }
 
+  const shouldLoop = loopVideos.includes(currentVideo);
+
   return (
     <div className="relative w-full max-w-md aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
       <video
@@ -37,6 +40,7 @@ export default function VideoPlayer() {
           isAActive ? "opacity-100" : "opacity-0"
         }`}
         playsInline
+        loop={shouldLoop}
       />
 
       <video
@@ -46,6 +50,7 @@ export default function VideoPlayer() {
           !isAActive ? "opacity-100" : "opacity-0"
         }`}
         playsInline
+        loop={shouldLoop}
       />
     </div>
   );

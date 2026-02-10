@@ -51,6 +51,12 @@ export function useSpeechRecognition(
 
     recognition.onend = () => {
       setIsListening(false);
+
+      // Auto-restart if still in listening mode
+      if ((window as any).__chatListening) {
+        recognition.start();
+        setIsListening(true);
+      }
     };
 
     recognitionRef.current = recognition;

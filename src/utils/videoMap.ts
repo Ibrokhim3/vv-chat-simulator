@@ -8,5 +8,6 @@ export const videoMap: Record<VideoKey, string> = {
   general: "/videos/general_response.mp4",
   fallback: "/videos/fallback.mp4",
   prompt: "/videos/prompt.mp4",
+  easter_egg: "/videos/easter_egg.mp4",
   goodbye: "/videos/goodbye.mp4",
 };

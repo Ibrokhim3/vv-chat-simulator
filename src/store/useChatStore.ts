@@ -5,6 +5,7 @@ export type ChatState =
   | "greeting"
   | "listening"
   | "responding"
+  | "prompt"
   | "goodbye";
 
 export type VideoKey =
@@ -13,6 +14,7 @@ export type VideoKey =
   | "listening"
   | "weather"
   | "general"
+  | "easter_egg"
   | "fallback"
   | "prompt"
   | "goodbye";
