@@ -9,7 +9,13 @@ export function matchKeyword(text: string): VideoKey {
   )
     return "easter_egg";
   if (t.includes("bye") || t.includes("goodbye")) return "goodbye";
-  if (t.includes("hello") || t.includes("hi") || t.includes("general"))
+  if (
+    t.includes("hello") ||
+    t.includes("hi") ||
+    t.includes("general") ||
+    t.includes("fine") ||
+    t.includes("thank you")
+  )
     return "general";
   if (t.includes("weather") || t.includes("today")) return "weather";
 

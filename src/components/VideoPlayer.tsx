@@ -10,8 +10,6 @@ export default function VideoPlayer() {
   const state = useChatStore((s) => s.state);
   const { videoA, videoB, isAActive, activeVideoEl } =
     useVideoController(currentVideo);
-  const setState = useChatStore((s) => s.setState);
-  const playVideo = useChatStore((s) => s.playVideo);
 
   const muted = state === "idle";
 
@@ -19,10 +17,8 @@ export default function VideoPlayer() {
     activeVideoEl.current.onended = () => {
       const { state, playVideo, setState, resetChat } = useChatStore.getState();
 
-      // Looping videos should never end the flow
       if (state === "idle" || state === "listening") return;
 
-      // Any normal response or prompt → back to listening
       if (
         state === "greeting" ||
         state === "responding" ||
@@ -33,7 +29,6 @@ export default function VideoPlayer() {
         return;
       }
 
-      // Goodbye ends the conversation
       if (state === "goodbye") {
         resetChat();
       }
@@ -43,23 +38,23 @@ export default function VideoPlayer() {
   const shouldLoop = loopVideos.includes(currentVideo);
 
   return (
-    <div className="relative w-full max-w-md aspect-video bg-black rounded-xl overflow-hidden shadow-lg min-h-[225px]">
+    <div className="relative w-full max-w-md aspect-square sm:aspect-video bg-black rounded-2xl overflow-hidden shadow-lg min-h-[250px]">
       <video
         ref={videoA}
-        muted={muted}
+        muted={muted || !isAActive}
         className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity",
+          "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
           isAActive ? "opacity-100" : "opacity-0",
         )}
         playsInline
-        loop={shouldLoop}
+        loop={shouldLoop && isAActive}
       />
 
       <video
         ref={videoB}
-        muted={muted}
+        muted={muted || !isAActive}
         className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity",
+          "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
           !isAActive ? "opacity-100" : "opacity-0",
         )}
         playsInline
