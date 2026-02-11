@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 type SpeechHook = {
   start: () => void;
   stop: () => void;
-  transcript: string;
   isListening: boolean;
   error: string | null;
 };
@@ -13,7 +12,7 @@ export function useSpeechRecognition(
 ): SpeechHook {
   const recognitionRef = useRef<any>(null);
   const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState("");
+  // const [transcript, setTranscript] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export function useSpeechRecognition(
         .map((r: any) => r[0].transcript)
         .join("");
 
-      setTranscript(text);
+      // setTranscript(text);
 
       if (event.results[0].isFinal) {
         onResult(text);
@@ -63,7 +62,7 @@ export function useSpeechRecognition(
   }, []);
 
   const start = () => {
-    setTranscript("");
+    // setTranscript("");
     setError(null);
     setIsListening(true);
     recognitionRef.current?.start();
@@ -74,5 +73,5 @@ export function useSpeechRecognition(
     setIsListening(false);
   };
 
-  return { start, stop, transcript, isListening, error };
+  return { start, stop, isListening, error };
 }

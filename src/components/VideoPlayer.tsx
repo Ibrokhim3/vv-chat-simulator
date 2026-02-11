@@ -38,28 +38,38 @@ export default function VideoPlayer() {
   const shouldLoop = loopVideos.includes(currentVideo);
 
   return (
-    <div className="relative w-full max-w-md aspect-square sm:aspect-video bg-black rounded-2xl overflow-hidden shadow-lg min-h-[250px]">
-      <video
-        ref={videoA}
-        muted={muted || !isAActive}
+    <div className="relative">
+      <div
         className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
-          isAActive ? "opacity-100" : "opacity-0",
+          "absolute -inset-4 rounded-2xl blur-xl transition-opacity duration-500",
+          state === "listening"
+            ? "opacity-100 bg-pink-500/50 animate-pulse"
+            : "opacity-0",
         )}
-        playsInline
-        loop={shouldLoop && isAActive}
       />
+      <div className="relative w-full max-w-md aspect-square sm:aspect-video bg-black rounded-2xl overflow-hidden shadow-lg min-h-[250px]">
+        <video
+          ref={videoA}
+          muted={muted || !isAActive}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
+            isAActive ? "opacity-100" : "opacity-0",
+          )}
+          playsInline
+          loop={shouldLoop && isAActive}
+        />
 
-      <video
-        ref={videoB}
-        muted={muted || !isAActive}
-        className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
-          !isAActive ? "opacity-100" : "opacity-0",
-        )}
-        playsInline
-        loop={shouldLoop}
-      />
+        <video
+          ref={videoB}
+          muted={muted || !isAActive}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out",
+            !isAActive ? "opacity-100" : "opacity-0",
+          )}
+          playsInline
+          loop={shouldLoop}
+        />
+      </div>
     </div>
   );
 }

@@ -28,6 +28,7 @@ interface ChatStore {
   setState: (state: ChatState) => void;
   playVideo: (video: VideoKey) => void;
   setTranscript: (text: string) => void;
+  clearTranscript: () => void;
   incrementSilence: () => void;
   resetSilence: () => void;
   resetChat: () => void;
@@ -44,6 +45,7 @@ export const useChatStore = create<ChatStore>((set) => ({
   playVideo: (video) => set({ currentVideo: video }),
 
   setTranscript: (text) => set({ lastTranscript: text }),
+  clearTranscript: () => set({ lastTranscript: "" }),
 
   incrementSilence: () => set((s) => ({ silenceCount: s.silenceCount + 1 })),
 

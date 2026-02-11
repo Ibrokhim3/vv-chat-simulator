@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { SILENCE_TIME } from "@/consts/silince-time";
 import { cn } from "@/utils/cn";
+import Transcript from "@/components/Transcript";
 
 export default function Home() {
   const { state, setState, playVideo, setTranscript, resetChat } =
@@ -32,6 +33,7 @@ export default function Home() {
   useEffect(() => {
     if (state === "listening") {
       (window as any).__chatListening = true;
+      useChatStore.getState().clearTranscript();
       speech.start();
     } else {
       (window as any).__chatListening = false;
@@ -75,6 +77,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-linear-to-b from-slate-900 to-black text-white flex flex-col items-center justify-center p-4 gap-6">
       <VideoPlayer />
+      <div className="h-12 flex items-center justify-center">
+        <Transcript />
+      </div>
       <div className="h-16 flex items-center justify-center relative">
         {/* Start button */}
         <button
