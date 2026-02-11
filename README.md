@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+40 minutes
+2 hours
 
-## Getting Started
+Issues:
 
-First, run the development server:
+Prompt, fallback, easter_egg doesn't work (video after some time when speech regognition is stopped)
+If Stopped for some time it doesn't work fixed with restart
+Listening, Idle video stopped completely after it ends fixed with enabling loop
+
+# Virtual Anime Video Chat Simulator
+
+A modern web application that simulates a real-time video conversation with a virtual anime-style character.  
+The app listens to the user’s speech, detects keywords, and plays pre-recorded video responses with seamless, cinematic transitions.
+
+---
+
+## 🚀 Setup & Run Instructions
+
+### Requirements
+
+- Node.js 18+
+- Google Chrome or Microsoft Edge (Web Speech API support)
+
+### Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+
+###
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Choices & Rationale
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Area                   | Technology                      | Why                                                                                |
+| :--------------------- | :------------------------------ | :--------------------------------------------------------------------------------- |
+| **Framework**          | Next.js 16 + React + TypeScript | Modern production-grade React stack with clean architecture and type safety.       |
+| **Styling**            | Tailwind CSS                    | Fast UI development, responsive layout, and animation utilities.                   |
+| **State Management**   | Zustand                         | Simple and predictable global state for managing the chat and video state machine. |
+| **Speech Recognition** | Web Speech API                  | Free, fast, no backend required, works well in Chrome & Edge.                      |
+| **Video Playback**     | Native HTML5 `<video>`          | Maximum control, preloading support, and smooth playback without heavy libraries.  |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🎥 Video Playback Strategy (Seamlessness)
 
-To learn more about Next.js, take a look at the following resources:
+To avoid black frames, flickering, or loading delays, the app uses a **Dual-Video Layer** system (Layer A and Layer B).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### The "Warm-Swap" Process:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+While one video is visible and playing, the next video is:
 
-## Deploy on Vercel
+1.  **Preloaded** in the background.
+2.  **Buffered** until the `oncanplay` event fires.
+3.  **Prepared** in the hidden video layer.
+4.  **Cross-faded** using CSS opacity transitions once ready.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**This ensures:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- No blank frames or "pop-in."
+- No loading spinners.
+- No sudden cuts.
+- Smooth audio and visual transitions.
+- Looping videos (Idle and Listening) stay active without triggering unnecessary state changes.
+
+---
+
+## 🎤 Speech Recognition & Keyword Logic
+
+The app leverages the browser’s **Web Speech API** to handle voice interactions.
+
+- **Activation:** Microphone is activated exactly when the "Listening" video state starts.
+- **Real-time:** Both interim and final speech results are supported for instant UI feedback.
+- **Persistence:** Recognition automatically restarts if the user pauses or the API times out prematurely.
+
+### Keyword Mapping
+
+When speech is finalized, the transcript is stored in **Zustand** and processed through a keyword router:
+
+| User Input                     | Video Response       |
+| :----------------------------- | :------------------- |
+| "hello", "hi"                  | **Greeting**         |
+| "weather", "today"             | **Weather**          |
+| "easter"                       | **Easter Egg**       |
+| "bye", "goodbye"               | **Goodbye**          |
+| "general", "fine", "thank you" | **General Response** |
+| _Speech error / unclear_       | **Fallback**         |
+
+> [!NOTE]  
+> The router supports partial matches and is entirely case-insensitive.
+
+---
+
+## ✅ Implemented Features
+
+### Core Requirements
+
+- **Seamless video playback & transitions** (Dual-buffer system).
+- **Video state machine** driven by Zustand.
+- **Browser speech recognition** integration.
+- **Keyword-based video routing**.
+- **Silence detection** with automated prompting.
+- **Goodbye auto-exit** logic.
+- **Fallback and Easter-egg** video paths.
+
+### Stretch Goals Completed
+
+- 🎤 **Microphone pulse/glow** animation during the listening state.
+- 📝 **Live transcript display** for real-time user feedback.
+- 📱 **Fully responsive layout** for desktop and mobile.
+- 🎬 **Cross-fade transitions** between video layers.
+- 🎧 **Audio Syncing:** Correct audio management per active video layer.
+
+---
+
+## 🧩 Challenges & Solutions
+
+- **Video flickering / black frames:** Solved by dual-video buffering and switching only after the `oncanplay` event.
+- **Audio playing from hidden videos:** Implemented logic to ensure only the visible layer is unmuted; the inactive layer stays silent.
+- **Speech recognition stopping unexpectedly:** Added auto-restart logic to keep recognition active while the state machine remains in the "Listening" state.
+- **UI jumping when transcript appears:** Reserved layout space in the DOM to prevent layout shifts (CLS).
+
+---
+
+## ⚠ Known Limitations
+
+- **Browser Support:** Web Speech API works best in Chrome & Edge.
+- **Hardware:** Speech accuracy is highly dependent on microphone quality.
+- **Localization:** Single-language (English) only.
+- **Logic:** No backend or AI-generated responses (Static keyword mapping).
+
+---
+
+## 🚀 Future Improvements
+
+- Multilingual speech recognition support.
+- Emotion-based video responses (Sentiment analysis).
+- AI-driven dialogue (Integration with GPT + TTS + Video).
+- Improved lip-sync and procedural animations.
+- Native Android / iOS versions.
