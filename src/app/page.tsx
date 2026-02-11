@@ -11,8 +11,7 @@ import { cn } from "@/utils/cn";
 import Transcript from "@/components/Transcript";
 
 export default function Home() {
-  const { state, setState, playVideo, setTranscript, resetChat } =
-    useChatStore();
+  const { state, setState, playVideo, setTranscript } = useChatStore();
 
   const speech = useSpeechRecognition((text) => {
     useChatStore.getState().resetSilence();
