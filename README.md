@@ -76,16 +76,14 @@ The app leverages the browser’s **Web Speech API** to handle voice interaction
 
 When speech is finalized, the transcript is stored in **Zustand** and processed through a keyword router:
 
-| User Input         | Video Response |
-| :----------------- | :------------- |
-| "hello", "hi"      | **Greeting**   |
-| "weather", "today" | **Weather**    |
-| "easter"           | **Easter Egg** |
-| "bye", "goodbye"   | **Goodbye**    |
-
-| "hello", "hi",
-"general", "fine", "thank you" | **General Response** |
-| _Speech error / unclear_ | **Fallback** |
+| User Input                     | Video Response       |
+| :----------------------------- | :------------------- |
+| "hello", "hi"                  | **Greeting**         |
+| "weather", "today"             | **Weather**          |
+| "easter"                       | **Easter Egg**       |
+| "bye", "goodbye"               | **Goodbye**          |
+| "general", "fine", "thank you" | **General Response** |
+| _Speech error / unclear_       | **Fallback**         |
 
 > [!NOTE]  
 > The router supports partial matches and is entirely case-insensitive.
