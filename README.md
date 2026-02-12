@@ -1,5 +1,8 @@
 40 minutes
 2 hours
+1.5 hours
+0.5 hours
+0.5 hours
 
 # Virtual Anime Video Chat Simulator
 
@@ -112,6 +115,7 @@ When speech is finalized, the transcript is stored in **Zustand** and processed 
 - **Audio playing from hidden videos:** Implemented logic to ensure only the visible layer is unmuted; the inactive layer stays silent.
 - **Speech recognition stopping unexpectedly:** Added auto-restart logic to keep recognition active while the state machine remains in the "Listening" state.
 - **UI jumping when transcript appears:** Reserved layout space in the DOM to prevent layout shifts (CLS).
+- **Speech recognition typing:** Install `@types/web-speech-api` for Web Speech API typing.
 
 ---
 

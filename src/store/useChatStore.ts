@@ -24,7 +24,8 @@ interface ChatStore {
   currentVideo: VideoKey;
   lastTranscript: string;
   silenceCount: number;
-
+  isListening: boolean;
+  setListening: (v: boolean) => void;
   setState: (state: ChatState) => void;
   playVideo: (video: VideoKey) => void;
   setTranscript: (text: string) => void;
@@ -39,7 +40,8 @@ export const useChatStore = create<ChatStore>((set) => ({
   currentVideo: "idle",
   lastTranscript: "",
   silenceCount: 0,
-
+  isListening: false,
+  setListening: (isListening) => set({ isListening }),
   setState: (state) => set({ state }),
 
   playVideo: (video) => set({ currentVideo: video }),
