@@ -4,6 +4,7 @@ import { useChatStore } from "@/store/useChatStore";
 import { useVideoController } from "@/hooks/useVideoController";
 import { loopVideos } from "@/utils/videoBehavior";
 import { cn } from "@/utils/cn";
+import { useEffect } from "react";
 
 export default function VideoPlayer() {
   const currentVideo = useChatStore((s) => s.currentVideo);
@@ -13,8 +14,34 @@ export default function VideoPlayer() {
 
   const muted = state === "idle";
 
-  if (activeVideoEl.current) {
-    activeVideoEl.current.onended = () => {
+  //can be removed
+  // if (activeVideoEl.current) {
+  //   activeVideoEl.current.onended = () => {
+  //     const { state, playVideo, setState, resetChat } = useChatStore.getState();
+
+  //     if (state === "idle" || state === "listening") return;
+
+  //     if (
+  //       state === "greeting" ||
+  //       state === "responding" ||
+  //       state === "prompt"
+  //     ) {
+  //       playVideo("listening");
+  //       setState("listening");
+  //       return;
+  //     }
+
+  //     if (state === "goodbye") {
+  //       resetChat();
+  //     }
+  //   };
+  // }
+
+  useEffect(() => {
+    const video = activeVideoEl.current;
+    if (!video) return;
+
+    const handleEnded = () => {
       const { state, playVideo, setState, resetChat } = useChatStore.getState();
 
       if (state === "idle" || state === "listening") return;
@@ -33,7 +60,13 @@ export default function VideoPlayer() {
         resetChat();
       }
     };
-  }
+
+    video.addEventListener("ended", handleEnded);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+    };
+  }, [activeVideoEl]);
 
   const shouldLoop = loopVideos.includes(currentVideo);
 

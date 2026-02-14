@@ -31,11 +31,11 @@ export default function Home() {
 
   useEffect(() => {
     if (state === "listening") {
-      (window as any).__chatListening = true;
+      useChatStore.getState().setListening(true);
       useChatStore.getState().clearTranscript();
       speech.start();
     } else {
-      (window as any).__chatListening = false;
+      useChatStore.getState().setListening(false);
       speech.stop();
     }
   }, [state]);
