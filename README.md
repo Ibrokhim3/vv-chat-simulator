@@ -3,6 +3,7 @@
 1.5 hours
 0.5 hours
 0.5 hours
+1.5 hours
 
 # Virtual Anime Video Chat Simulator
 

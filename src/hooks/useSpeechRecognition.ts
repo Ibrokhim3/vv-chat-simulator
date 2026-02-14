@@ -15,7 +15,14 @@ export function useSpeechRecognition(
   const onResultRef = useRef(onResult);
 
   const [isListening, setIsListening] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const isSupported =
+    typeof window !== "undefined" &&
+    !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+
+  const [error, setError] = useState<string | null>(
+    isSupported ? null : "Speech recognition not supported",
+  );
 
   // Always keep latest callback without recreating SpeechRecognition
   useEffect(() => {
@@ -24,13 +31,14 @@ export function useSpeechRecognition(
 
   // Create SpeechRecognition ONCE
   useEffect(() => {
+    if (!isSupported) return;
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) {
-      setError("Speech recognition not supported");
-      return;
-    }
+    // if (!SpeechRecognition) {
+    //   setError("Speech recognition not supported");
+    //   return;
+    // }
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
