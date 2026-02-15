@@ -35,11 +35,6 @@ export function useSpeechRecognition(
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    // if (!SpeechRecognition) {
-    //   setError("Speech recognition not supported");
-    //   return;
-    // }
-
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.interimResults = true;

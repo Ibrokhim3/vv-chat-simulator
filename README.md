@@ -1,10 +1,3 @@
-40 minutes
-2 hours
-1.5 hours
-0.5 hours
-0.5 hours
-1.5 hours
-
 # Virtual Anime Video Chat Simulator
 
 A modern web application that simulates a real-time video conversation with a virtual anime-style character.  
@@ -126,6 +119,12 @@ When speech is finalized, the transcript is stored in **Zustand** and processed 
 - **Hardware:** Speech accuracy is highly dependent on microphone quality.
 - **Localization:** Single-language (English) only.
 - **Logic:** No backend or AI-generated responses (Static keyword mapping).
+
+---
+
+## ⏱ Development Time
+
+This project was completed in approximately **7.3 hours** of focused development time.
 
 ---
 

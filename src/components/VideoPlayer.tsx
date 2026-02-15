@@ -14,29 +14,6 @@ export default function VideoPlayer() {
 
   const muted = state === "idle";
 
-  //can be removed
-  // if (activeVideoEl.current) {
-  //   activeVideoEl.current.onended = () => {
-  //     const { state, playVideo, setState, resetChat } = useChatStore.getState();
-
-  //     if (state === "idle" || state === "listening") return;
-
-  //     if (
-  //       state === "greeting" ||
-  //       state === "responding" ||
-  //       state === "prompt"
-  //     ) {
-  //       playVideo("listening");
-  //       setState("listening");
-  //       return;
-  //     }
-
-  //     if (state === "goodbye") {
-  //       resetChat();
-  //     }
-  //   };
-  // }
-
   useEffect(() => {
     const video = activeVideoEl.current;
     if (!video) return;
